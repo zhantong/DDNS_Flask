@@ -5,10 +5,6 @@ import re
 
 class Ddns():
 
-    def __init__(self, ip):
-        self.update_nginx_config(ip)
-        self.update_dnspod(ip)
-
     def update_nginx_config(self, ip):
         with open('/etc/nginx/sites-available/default', 'r') as f:
             s = f.read()
@@ -35,3 +31,8 @@ class Ddns():
         data = urllib.parse.urlencode(info).encode()
         t = urllib.request.urlopen(url, data=data)
         return t.read().decode('utf-8')
+
+    def update(self, ip):
+        t=self.update_dnspod(ip)
+        self.update_nginx_config(ip)
+        return t
