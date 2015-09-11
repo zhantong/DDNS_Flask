@@ -1,10 +1,13 @@
-from flask import Flask,jsonify,request
+from flask import Flask,request
 import urllib.parse
 import re
 import os
 application=Flask(__name__)
 @application.route('/ipv6')
 def ipv6():
+	code=request.args['code']
+	if code!='80':
+		return 'Bad Request'
 	ip=request.remote_addr
 	with open('/etc/nginx/sites-available/default','r') as f:
 		s=f.read()
